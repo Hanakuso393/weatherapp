@@ -41,109 +41,123 @@ struct ContentView: View {
             }
         } else {
             
-            
-            VStack {
-                Spacer()
-                TextField("Enter city or zipcode", text: $query, onEditingChanged: getFocus)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .background(
-                        Rectangle()
-                            .foregroundColor(.white.opacity(0.2))
-                            .cornerRadius(25)
-                            .frame(height: 50)
-                    )
-                    .padding(.leading, 40)
-                    .padding(.trailing, 40)
-                    .padding(.top, textFieldHeight)
-                    .padding(.bottom, 15)
-                    .multilineTextAlignment(.center)
-                    .font(Font.system(size: 20))
-                    .onSubmit {
-                        Task {
-                            try await fetchWeather(query: query)
-                        }
-                        withAnimation {
-                            textFieldHeight = 15
-                        }
-                    }
-                
-                Text(cityName)
-                    .font(.system(size: 35))
-                    .bold()
-                Text("\(Date().formatted(date: .complete, time: .omitted))")
-                    .font(.system(size: 18))
-                Text(weatherEmoji)
-                    .font(.system(size: 130))
-                    .shadow(radius: 75)
-                Text("\(currentTemp)°C")
-                    .font(.system(size: 60))
-                    .bold()
-                Text("\(conditionText)")
-                    .font(.system(size: 22))
-                Spacer()
-                Text("Hourly Forecast")
-                    .font(.system(size: 17))
-                    .shadow(color: .black.opacity(0.2), radius: 1, x: 0, y: 2)
-                    .bold()
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        Spacer()
-                        ForEach(hourlyForecast) { forcast in
-                            VStack{
-                                Text("\(getShortTime(time: forcast.time))")
-                                    .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
-                                Text("\(getWeatherEmoji(code: forcast.condition.code))")
-                                    .frame(width: 50, height: 14)
-                                    .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
-                                Text("\(Int(forcast.temp_c))°C")
-                                    .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
+            NavigationView {
+                VStack {
+                    Spacer()
+                    TextField("Enter city or zipcode", text: $query, onEditingChanged: getFocus)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .background(
+                            Rectangle()
+                                .foregroundColor(.white.opacity(0.2))
+                                .cornerRadius(25)
+                                .frame(height: 50)
+                        )
+                        .padding(.leading, 40)
+                        .padding(.trailing, 40)
+                        .padding(.top, textFieldHeight)
+                        .padding(.bottom, 15)
+                        .multilineTextAlignment(.center)
+                        .font(Font.system(size: 20))
+                        .onSubmit {
+                            Task {
+                                try await fetchWeather(query: query)
                             }
-                            .frame(width: 50, height: 90)
+                            withAnimation {
+                                textFieldHeight = 15
+                            }
                         }
-                        Spacer()
-                    }
-                    .background(Color.white.blur(radius: 75).opacity(0.35))
-                    .cornerRadius(15)
-                }
-                .padding()
-                Spacer()
-                Text("3 Day Forcast")
-                    .font(.system(size: 17))
-                    .shadow(color: .black.opacity(0.2), radius: 1, x: 0, y: 2)
-                    .bold()
-                List (results){ forecast in
-                    HStack(alignment: .center, spacing: nil) {
-                        Text("\(getShortDate(epoch: forecast.date_epoch))")
-                            .frame(maxWidth: 50, alignment: .leading)
-                            .bold()
-                        Text("\(getWeatherEmoji(code: forecast.day.condition.code))")
-                            .frame(maxWidth: 30, alignment: .leading)
-                        Text("\(Int(forecast.day.avgtemp_c))°C")
-                            .frame(maxWidth: 50, alignment: .leading)
-                        Spacer()
-                        Text("\(forecast.day.condition.text)")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .listRowBackground(Color.white.blur(radius: 70).opacity(0.5))
                     
+                    Text(cityName)
+                        .font(.system(size: 35))
+                        .bold()
+                    Text("\(Date().formatted(date: .complete, time: .omitted))")
+                        .font(.system(size: 18))
+                    Text(weatherEmoji)
+                        .font(.system(size: 130))
+                        .shadow(radius: 75)
+                    Text("\(currentTemp)°C")
+                        .font(.system(size: 60))
+                        .bold()
+                    Text("\(conditionText)")
+                        .font(.system(size: 22))
+                    Spacer()
+                    Text("Hourly Forecast")
+                        .font(.system(size: 17))
+                        .shadow(color: .black.opacity(0.2), radius: 1, x: 0, y: 2)
+                        .bold()
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            Spacer()
+                            ForEach(hourlyForecast) { forcast in
+                                VStack{
+                                    Text("\(getShortTime(time: forcast.time))")
+                                        .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
+                                    Text("\(getWeatherEmoji(code: forcast.condition.code))")
+                                        .frame(width: 50, height: 14)
+                                        .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
+                                    Text("\(Int(forcast.temp_c))°C")
+                                        .shadow(color:.black.opacity(0.2), radius: 1, x: 0, y: 0)
+                                }
+                                .frame(width: 50, height: 90)
+                            }
+                            Spacer()
+                        }
+                        .background(Color.white.blur(radius: 75).opacity(0.35))
+                        .cornerRadius(15)
+                    }
+                    .padding()
+                    
+                    Spacer()
+                    Text("3 Day Forcast")
+                        .font(.system(size: 17))
+                        .shadow(color: .black.opacity(0.2), radius: 1, x: 0, y: 2)
+                        .bold()
+                    List {
+                        ForEach (Array(results.enumerated()), id: \.1.id) {
+                            index, forecast in
+                            
+                            NavigationLink {
+                                WeatherDetails(results: $results, cityName: $cityName, index: index)
+                            } label: {
+                                
+                                
+                                HStack(alignment: .center, spacing: nil) {
+                                    Text("\(getShortDate(epoch: forecast.date_epoch))")
+                                        .frame(maxWidth: 50, alignment: .leading)
+                                        .bold()
+                                    Text("\(getWeatherEmoji(code: forecast.day.condition.code))")
+                                        .frame(maxWidth: 30, alignment: .leading)
+                                    Text("\(Int(forecast.day.avgtemp_c))°C")
+                                        .frame(maxWidth: 50, alignment: .leading)
+                                    Spacer()
+                                    Text("\(forecast.day.condition.text)")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .listRowBackground(Color.white.blur(radius: 70).opacity(0.5))
+                                
+                            }
+                            .listRowBackground(Color.white.blur(radius: 70).opacity(0.5))
+                        }
+                    }
+                    .contentMargins(.vertical, 0)
+                    .scrollContentBackground(.hidden)
+                    .preferredColorScheme(.dark)
+                    Spacer()
+                    Text("Data from weatherapi.com")
+                        .font(.system(size: 14))
                 }
-                .contentMargins(.vertical, 0)
-                .scrollContentBackground(.hidden)
-                .preferredColorScheme(.dark)
-                Spacer()
-                Text("Data from weatherapi.com")
-                    .font(.system(size: 14))
-            }
-            .background(backgroundColor)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .task {
-                do {
-                    try await fetchWeather(query: query)
-                } catch {
-                    print("error calling in task")
+                .background(backgroundColor)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .task {
+                    do {
+                        try await fetchWeather(query: query)
+                    } catch {
+                        print("error calling in task")
+                    }
                 }
             }
+
         }
         
     }
@@ -154,10 +168,10 @@ struct ContentView: View {
     }
     
     func fetchWeather(query: String) async throws {
-        var endpoint = "http://api.weatherapi.com/v1/forecast.json?key=[key]&q=Jamaica&days=3&aqi=no&alerts=no"
+        var endpoint = "http://api.weatherapi.com/v1/forecast.json?key=97c2cdbbe41645f6a6e213011242206&q=Jamaica&days=3&aqi=no&alerts=no"
         
         if (query != "") {
-            endpoint = "http://api.weatherapi.com/v1/forecast.json?key=[key]&q=\(query)&days=3&aqi=no&alerts=no"
+            endpoint = "http://api.weatherapi.com/v1/forecast.json?key=97c2cdbbe41645f6a6e213011242206&q=\(query)&days=3&aqi=no&alerts=no"
         }
 
         

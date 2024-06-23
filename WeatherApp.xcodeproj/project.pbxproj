@@ -13,6 +13,7 @@
 		946DC0F72C277B3800A99456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 946DC0F62C277B3800A99456 /* Preview Assets.xcassets */; };
 		946DC0FF2C279A9000A99456 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946DC0FE2C279A9000A99456 /* Models.swift */; };
 		946DC1012C279AD600A99456 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946DC1002C279AD600A99456 /* Helpers.swift */; };
+		946DC1032C289DD900A99456 /* WeatherDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946DC1022C289DD900A99456 /* WeatherDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		946DC0FD2C2787F300A99456 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		946DC0FE2C279A9000A99456 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		946DC1002C279AD600A99456 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		946DC1022C289DD900A99456 /* WeatherDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				946DC0F12C277B3700A99456 /* ContentView.swift */,
 				946DC0F32C277B3800A99456 /* Assets.xcassets */,
 				946DC0F52C277B3800A99456 /* Preview Content */,
+				946DC1022C289DD900A99456 /* WeatherDetails.swift */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 				946DC0FF2C279A9000A99456 /* Models.swift in Sources */,
 				946DC0F22C277B3700A99456 /* ContentView.swift in Sources */,
 				946DC0F02C277B3700A99456 /* WeatherAppApp.swift in Sources */,
+				946DC1032C289DD900A99456 /* WeatherDetails.swift in Sources */,
 				946DC1012C279AD600A99456 /* Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
