@@ -154,10 +154,10 @@ struct ContentView: View {
     }
     
     func fetchWeather(query: String) async throws {
-        var endpoint = "http://api.weatherapi.com/v1/forecast.json?key=97c2cdbbe41645f6a6e213011242206&q=Jamaica&days=3&aqi=no&alerts=no"
+        var endpoint = "http://api.weatherapi.com/v1/forecast.json?key=[key]&q=Jamaica&days=3&aqi=no&alerts=no"
         
         if (query != "") {
-            endpoint = "http://api.weatherapi.com/v1/forecast.json?key=97c2cdbbe41645f6a6e213011242206&q=\(query)&days=3&aqi=no&alerts=no"
+            endpoint = "http://api.weatherapi.com/v1/forecast.json?key=[key]&q=\(query)&days=3&aqi=no&alerts=no"
         }
 
         
